@@ -2,8 +2,6 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-// TODO: rename usbfs -- usbdevfs is the old name
-
 pub mod types {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
@@ -86,8 +84,5 @@ pub mod ioctl {
 
 #[cfg(test)]
 mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+
 }
