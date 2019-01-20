@@ -15,6 +15,7 @@ impl ParseCallbacks for Parse {
         }
     }
     fn item_name(&self, original_item_name: &str) -> Option<String> {
+        // TODO: maybe leave names unchanged to help online searches for these terms
         for prefix in &["USBDEVFS_", "usbdevfs_"] {
             if original_item_name.starts_with(prefix) {
                 return Some(original_item_name[prefix.len()..].to_string());
@@ -29,8 +30,7 @@ fn main() {
     // to bindgen, and lets you build up options for
     // the resulting bindings.
     let bindings = bindgen::Builder::default()
-        // The input header we would like to generate
-        // bindings for.
+        // TODO: actually might be simpler to copy the headers into this repo,
         .header("/usr/include/linux/usbdevice_fs.h")
         .generate_comments(true)
         .whitelist_type("^usbdevfs.*")
