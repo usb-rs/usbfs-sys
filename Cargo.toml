@@ -3,6 +3,7 @@ name = "usbfs-sys"
 version = "0.1.0"
 authors = ["David Holroyd <dave@badgers-in-foil.co.uk>"]
 edition = "2018"
+categories = [ "external-ffi-bindings" ]
 
 [dependencies]
 nix = "0.12"
