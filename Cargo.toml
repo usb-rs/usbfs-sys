@@ -2,9 +2,12 @@
 name = "usbfs-sys"
 version = "0.1.0"
 authors = ["David Holroyd <dave@badgers-in-foil.co.uk>"]
-license = "MIT/Apache-2.0"
+license = "MIT OR Apache-2.0"
 edition = "2018"
-categories = [ "external-ffi-bindings" ]
+categories = [ "external-ffi-bindings", "os" ]
+description = "Low-level bindings to Linux USBFS ioctls"
+documentation = "https://docs.rs/usbfs-sys"
+repository = "https://github.com/usb-rs/usbfs-sys"
 
 [dependencies]
 nix = "0.12"
