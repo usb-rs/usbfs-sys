@@ -1,10 +1,10 @@
 fn main() {
     #[cfg(feature = "bindgen")]
     {
+        use bindgen::callbacks::ParseCallbacks;
         use std::env;
         use std::path::PathBuf;
-        use bindgen::callbacks::ParseCallbacks;
-    
+
         #[derive(Debug)]
         struct Parse;
         impl ParseCallbacks for Parse {

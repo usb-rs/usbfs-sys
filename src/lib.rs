@@ -3,6 +3,8 @@
 #![allow(non_snake_case)]
 
 pub mod types {
+    #![allow(clippy::all)]
+
     #[cfg(feature = "bindgen")]
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
@@ -11,8 +13,8 @@ pub mod types {
 }
 
 pub mod ioctl {
-    use nix::*;
     use crate::types::*;
+    use nix::*;
 
     // see
     //  - https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/core/devio.c
@@ -44,11 +46,17 @@ pub mod ioctl {
         ///
         /// Will fail with `EBUSY` if some other claim is already in place (e.g. there is a kernel
         /// driver already attached).
-        claiminterface, 'U', 15, ::std::os::raw::c_uint
+        claiminterface,
+        'U',
+        15,
+        ::std::os::raw::c_uint
     );
     ioctl_read!(
         /// Release an interface previously claimed with `claiminterface()`.
-        releaseinterface, 'U', 16, ::std::os::raw::c_uint
+        releaseinterface,
+        'U',
+        16,
+        ::std::os::raw::c_uint
     );
     ioctl_write_ptr!(connectinfo, 'U', 17, connectinfo);
     ioctl_readwrite!(ioctl, 'U', 18, ioctl);
@@ -57,7 +65,11 @@ pub mod ioctl {
     ioctl_none!(reset, 'U', 20);
     ioctl_read!(clear_halt, 'U', 21, ::std::os::raw::c_uint);
     // USBDEVFS_CONNECT and USBDEVFS_DISCONNECT are only used via USBDEVFS_IOCTL
-    pub unsafe fn disconnect(fd: ::std::os::raw::c_int, ifno: ::std::os::raw::c_int) -> Result<i32> {
+    #[allow(clippy::missing_safety_doc)]
+    pub unsafe fn disconnect(
+        fd: ::std::os::raw::c_int,
+        ifno: ::std::os::raw::c_int,
+    ) -> Result<i32> {
         let mut req = crate::types::ioctl {
             ifno,
             ioctl_code: request_code_none!('U', 22) as i32,
@@ -65,7 +77,8 @@ pub mod ioctl {
         };
         ioctl(fd, &mut req)
     }
-    pub unsafe fn connect(fd: ::std::os::raw::c_int, ifno: ::std::os::raw::c_int) -> Result<i32>{
+    #[allow(clippy::missing_safety_doc)]
+    pub unsafe fn connect(fd: ::std::os::raw::c_int, ifno: ::std::os::raw::c_int) -> Result<i32> {
         let mut req = crate::types::ioctl {
             ifno,
             ioctl_code: request_code_none!('U', 23) as i32,
@@ -78,7 +91,10 @@ pub mod ioctl {
     ioctl_read!(
         /// returns a 32 bit mask describing the capabilities of this _usbdevfs_ device, as
         /// described by the `CAP_*` constants.
-        get_capabilities, 'U', 26, __u32
+        get_capabilities,
+        'U',
+        26,
+        __u32
     );
     ioctl_read!(disconnect_claim, 'U', 27, disconnect_claim);
     ioctl_read!(alloc_streams, 'U', 28, streams);
@@ -87,6 +103,4 @@ pub mod ioctl {
 }
 
 #[cfg(test)]
-mod tests {
-
-}
+mod tests {}
